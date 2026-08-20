@@ -1,0 +1,2 @@
+# Web-Based-Cryptographic-Security-Digital-Forensics-Laboratory
+VONKA CRYPTOSPHERE X — a complete, browser-based cryptographic security &amp; digital forensics laboratory. Offers AES-256-GCM, RSA-2048, hybrid encryption, PBKDF2, file protection, SHA hashing, digital signatures, and ciphertext analysis. All operations run locally via Web Crypto API — zero data transmitted. Ideal for cybersecurity education.
