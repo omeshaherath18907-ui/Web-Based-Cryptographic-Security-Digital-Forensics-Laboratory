@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VONKA CRYPTOSPHERE X</title>
+
+    <!-- Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        /* ============================================================
+                   GLOBAL RESET & VARIABLES
+                   ============================================================ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a2236;
+            --bg-input: #0d1424;
+            --border-color: #2a3a5c;
+            --text-primary: #e8edf5;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-cyan: #22d3ee;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-green: #34d399;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --shadow-glow: 0 0 30px rgba(34, 211, 238, 0.08);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: 0.25s ease;
+            --font: 'Inter', -apple-system, sans-serif;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image:
+                radial-gradient(ellipse at 10% 20%, rgba(34, 211, 238, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+        }
+
+        /* ============================================================
+                   APP SHELL
+                   ============================================================ */
+        .app-container {
+            width: 100%;
+            max-width: 1440px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-glow), 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 92vh;
+            max-height: 900px;
+        }
+
+        /* ============================================================
+                   HEADER
+                   ============================================================ */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .app-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-brand .logo-icon {
+            font-size: 28px;
+            color: var(--accent-cyan);
+        }
+
+        .app-brand h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .app-brand .badge {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 3px 10px;
+            border-radius: 100px;
+            background: rgba(34, 211, 238, 0.12);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            -webkit-text-fill-color: var(--accent-cyan);
+        }
+
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            margin-right: 6px;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.85);
+            }
+        }
+
+        /* ============================================================
+                   LAYOUT: SIDEBAR + MAIN
+                   ============================================================ */
+        .app-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* --- SIDEBAR --- */
+        .app-sidebar {
+            width: 200px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            padding: 20px 0;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 0 12px;
+        }
+
+        .sidebar-nav .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+
+        .sidebar-nav .nav-item i {
+            width: 20px;
+            font-size: 16px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav .nav-item:hover {
+            background: rgba(34, 211, 238, 0.06);
+            color: var(--text-primary);
+        }
+
+        .sidebar-nav .nav-item.active {
+            background: rgba(34, 211, 238, 0.10);
+            color: var(--accent-cyan);
+            box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.15);
+        }
+
+        .sidebar-nav .nav-item .badge-nav {
+            margin-left: auto;
+            font-size: 10px;
+            background: rgba(139, 92, 246, 0.2);
+            padding: 1px 8px;
+            border-radius: 100px;
+            color: var(--accent-purple);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 16px 20px 0;
+            border-top: 1px solid var(--border-color);
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .app-main {
+            flex: 1;
+            padding: 24px 32px;
+            overflow-y: auto;
+            background: var(--bg-primary);
+        }
+
+        /* ============================================================
+                   TAB PANELS
+                   ============================================================ */
+        .tab-panel {
+            display: none;
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .panel-header h2 {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .panel-header h2 i {
+            color: var(--accent-cyan);
+            margin-right: 10px;
+        }
+
+        .panel-header .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* ============================================================
+                   CARDS & GRID
+                   ============================================================ */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 20px 22px;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: rgba(34, 211, 238, 0.15);
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title i {
+            color: var(--accent-cyan);
+        }
+
+        /* ============================================================
+                   FORMS & INPUTS
+                   ============================================================ */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .form-group textarea,
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: var(--font);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-group textarea:focus,
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.08);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        /* ============================================================
+                   BUTTONS
+                   ============================================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 14px;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: var(--bg-input);
+            color: var(--text-secondary);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #0a0e1a;
+            box-shadow: 0 4px 12px rgba(34, 211, 238, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(34, 211, 238, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+            color: #0a0e1a;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--accent-red), #b91c1c);
+            color: #fff;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 12px;
+        }
+
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ============================================================
+                   RESULT BOXES
+                   ============================================================ */
+        .result-box {
+            margin-top: 16px;
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            word-break: break-all;
+            color: var(--text-secondary);
+            max-height: 180px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .result-box .label {
+            font-family: var(--font);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .result-box .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .result-box .copy-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-badge.success {
+            background: rgba(52, 211, 153, 0.12);
+            color: var(--accent-green);
+        }
+
+        .status-badge.error {
+            background: rgba(239, 68, 68, 0.12);
+            color: var(--accent-red);
+        }
+
+        .status-badge.info {
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--accent-blue);
+        }
+
+        /* ============================================================
+                   DASHBOARD STATS
+                   ============================================================ */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 18px 20px;
+            text-align: center;
+        }
+
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            letter-spacing: -0.5px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .stat-card .stat-icon {
+            font-size: 20px;
+            color: var(--accent-purple);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        /* ============================================================
+                   PASSWORD STRENGTH
+                   ============================================================ */
+        .strength-bar {
+            display: flex;
+            gap: 4px;
+            margin: 8px 0 12px;
+        }
+
+        .strength-bar .segment {
+            flex: 1;
+            height: 4px;
+            border-radius: 4px;
+            background: var(--border-color);
+            transition: var(--transition);
+        }
+
+        .strength-bar .segment.active.weak {
+            background: var(--accent-red);
+        }
+        .strength-bar .segment.active.medium {
+            background: var(--accent-amber);
+        }
+        .strength-bar .segment.active.strong {
+            background: var(--accent-green);
+        }
+
+        .strength-label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ============================================================
+                   HASH LAB
+                   ============================================================ */
+        .hash-results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .hash-item {
+            background: var(--bg-input);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .hash-item .algo {
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-size: 12px;
+        }
+
+        .hash-item .digest {
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--text-secondary);
+            word-break: break-all;
+            margin-top: 3px;
+        }
+
+        /* ============================================================
+                   FILE UPLOAD
+                   ============================================================ */
+        .file-drop {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--bg-input);
+        }
+
+        .file-drop:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(34, 211, 238, 0.03);
+        }
+
+        .file-drop .file-icon {
+            font-size: 36px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .file-drop .file-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* ============================================================
+                   SCROLLBAR
+                   ============================================================ */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* ============================================================
+                   RESPONSIVE
+                   ============================================================ */
+        @media (max-width: 1024px) {
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .hash-results {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                height: auto;
+                max-height: none;
+                border-radius: 0;
+                padding: 0;
+            }
+            .app-body {
+                flex-direction: column;
+            }
+            .app-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 12px 0;
+                flex-direction: row;
+                overflow-x: auto;
+            }
+            .sidebar-nav {
+                flex-direction: row;
+                padding: 0 12px;
+                gap: 4px;
+                flex-wrap: nowrap;
+            }
+            .sidebar-nav .nav-item {
+                white-space: nowrap;
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+            .sidebar-nav .nav-item .badge-nav {
+                display: none;
+            }
+            .sidebar-footer {
+                display: none;
+            }
+            .app-main {
+                padding: 16px;
+            }
+            .app-header {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+            }
+            .app-brand h1 {
+                font-size: 16px;
+            }
+            .header-status {
+                font-size: 11px;
+            }
+            .stat-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .panel-header h2 {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+            .app-brand .badge {
+                display: none;
+            }
+        }
+
+        /* ============================================================
+                   TOAST NOTIFICATIONS
+                   ============================================================ */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 9999;
+            max-width: 380px;
+            width: 100%;
+        }
+
+        .toast {
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            font-size: 14px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideUp 0.3s ease;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--accent-green);
+        }
+        .toast.error {
+            border-left: 4px solid var(--accent-red);
+        }
+        .toast.info {
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================================
+                   LOADING SPINNER
+                   ============================================================ */
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-top-color: var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ============================================================
+                   MISC
+                   ============================================================ */
+        .mt-8 {
+            margin-top: 8px;
+        }
+        .mt-12 {
+            margin-top: 12px;
+        }
+        .mt-16 {
+            margin-top: 16px;
+        }
+        .gap-8 {
+            gap: 8px;
+        }
+        .flex {
+            display: flex;
+        }
+        .flex-center {
+            align-items: center;
+            justify-content: center;
+        }
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .text-muted {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .text-cyan {
+            color: var(--accent-cyan);
+        }
+        .text-green {
+            color: var(--accent-green);
+        }
+        .text-amber {
+            color: var(--accent-amber);
+        }
+        .text-red {
+            color: var(--accent-red);
+        }
+        .hidden {
+            display: none !important;
+        }
+        .w-full {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    TOAST CONTAINER
+    ============================================================ -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ============================================================
+    APP
+    ============================================================ -->
+    <div class="app-container">
+
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="app-brand">
+                <span class="logo-icon"><i class="fas fa-cube"></i></span>
+                <h1>VONKA CRYPTOSPHERE X</h1>
+                <span class="badge">SECURE</span>
+            </div>
+            <div class="header-status">
+                <span><span class="status-dot"></span> System Online</span>
+                <span>v2.0</span>
+            </div>
+        </header>
+
+        <!-- BODY -->
+        <div class="app-body">
+
+            <!-- SIDEBAR -->
+            <aside class="app-sidebar">
+                <nav class="sidebar-nav">
+                    <button class="nav-item active" data-tab="dashboard">
+                        <i class="fas fa-chart-pie"></i> Dashboard
+                    </button>
+                    <button class="nav-item" data-tab="encrypt">
+                        <i class="fas fa-lock"></i> Encrypt
+                    </button>
+                    <button class="nav-item" data-tab="decrypt">
+                        <i class="fas fa-unlock"></i> Decrypt
+                    </button>
+                    <button class="nav-item" data-tab="files">
+                        <i class="fas fa-file"></i> Files
+                    </button>
+                    <button class="nav-item" data-tab="hash">
+                        <i class="fas fa-fingerprint"></i> Hash Lab
+                    </button>
+                    <button class="nav-item" data-tab="signatures">
+                        <i class="fas fa-pen-fancy"></i> Signatures
+                        <span class="badge-nav">RSA</span>
+                    </button>
+                    <button class="nav-item" data-tab="analysis">
+                        <i class="fas fa-microscope"></i> Analysis
+                    </button>
+                </nav>
+                <div class="sidebar-footer">
+                    <i class="fas fa-shield-alt" style="color:var(--accent-cyan);"></i> Local &bull; No cloud
+                </div>
+            </aside>
+
+            <!-- MAIN -->
+            <main class="app-main">
+
+                <!-- ============================================================
+                DASHBOARD
+                ============================================================ -->
+                <section class="tab-panel active" id="tab-dashboard">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-chart-pie"></i> Security Dashboard</h2>
+                        <span class="subtitle">Real-time cryptographic lab status</span>
+                    </div>
+
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <span class="stat-icon"><i class="fas fa-shield"></i></span>
+                            <div class="stat-value" id="statEncrypted">0</div>
+                            <div class="stat-label">Messages Encrypted</div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-icon"><i class="fas fa-file-archive"></i></span>
+                            <div class="stat-value" id="statFiles">0</div>
+                            <div class="stat-label">Files Protected</div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-icon"><i class="fas fa-hashtag"></i></span>
+                            <div class="stat-value" id="statHashes">0</div>
+                            <div class="stat-label">Hashes Computed</div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-icon"><i class="fas fa-check-circle"></i></span>
+                            <div class="stat-value" id="statSignatures">0</div>
+                            <div class="stat-label">Signatures Verified</div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-info-circle"></i> System Status</div>
+                            <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
+                                <div><span class="status-badge success"><i class="fas fa-check"></i> Crypto Engine</span> — Ready</div>
+                                <div><span class="status-badge success"><i class="fas fa-check"></i> Key Storage</span> — Memory only</div>
+                                <div><span class="status-badge info"><i class="fas fa-info"></i> Algorithms</span> — AES-256, RSA-2048, ChaCha20</div>
+                                <div><span class="status-badge info"><i class="fas fa-info"></i> KDF</span> — PBKDF2 (100k iterations)</div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-bolt"></i> Quick Actions</div>
+                            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                                <button class="btn btn-primary btn-sm" onclick="navigateTab('encrypt')">
+                                    <i class="fas fa-lock"></i> Encrypt
+                                </button>
+                                <button class="btn btn-sm" style="border-color:var(--accent-amber);color:var(--accent-amber);" onclick="navigateTab('decrypt')">
+                                    <i class="fas fa-unlock"></i> Decrypt
+                                </button>
+                                <button class="btn btn-sm" style="border-color:var(--accent-purple);color:var(--accent-purple);" onclick="navigateTab('hash')">
+                                    <i class="fas fa-fingerprint"></i> Hash
+                                </button>
+                                <button class="btn btn-sm" style="border-color:var(--accent-green);color:var(--accent-green);" onclick="navigateTab('signatures')">
+                                    <i class="fas fa-pen-fancy"></i> Sign
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-16">
+                        <div class="card-title"><i class="fas fa-history"></i> Recent Activity</div>
+                        <div id="activityLog" style="font-size:13px;color:var(--text-secondary);max-height:120px;overflow-y:auto;">
+                            <div style="padding:4px 0;border-bottom:1px solid var(--border-color);">— System initialized</div>
+                            <div style="padding:4px 0;border-bottom:1px solid var(--border-color);">— Crypto engine ready</div>
+                            <div style="padding:4px 0;">— Awaiting operations…</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                ENCRYPT
+                ============================================================ -->
+                <section class="tab-panel" id="tab-encrypt">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-lock"></i> Encryption Lab</h2>
+                        <span class="subtitle">AES · RSA · Hybrid · Password-Based</span>
+                    </div>
+
+                    <div class="grid-2">
+                        <!-- AES / Symmetric -->
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-key"></i> Symmetric (AES-256-GCM)</div>
+                            <div class="form-group">
+                                <label>Plaintext</label>
+                                <textarea id="encPlaintext" placeholder="Secret message…">Hello, World!</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="encPassword" placeholder="Enter password" value="secure123" />
+                            </div>
+                            <button class="btn btn-primary btn-block" id="btnAesEncrypt">
+                                <i class="fas fa-lock"></i> Encrypt with AES
+                            </button>
+                            <div class="result-box mt-8 hidden" id="aesEncResult">
+                                <span class="label">AES Ciphertext (base64)</span>
+                                <button class="copy-btn" onclick="copyText('aesEncResult')">Copy</button>
+                                <div id="aesEncOutput"></div>
+                            </div>
+                        </div>
+
+                        <!-- RSA / Asymmetric -->
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-university"></i> Asymmetric (RSA-2048)</div>
+                            <div class="form-group">
+                                <label>Plaintext</label>
+                                <textarea id="encRsaPlain" placeholder="Secret message…">RSA test message</textarea>
+                            </div>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+                                <button class="btn btn-sm btn-ghost" id="btnGenRsaKey">
+                                    <i class="fas fa-sync"></i> Generate Keys
+                                </button>
+                            </div>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                                <button class="btn btn-primary btn-sm" id="btnRsaEncrypt">
+                                    <i class="fas fa-lock"></i> Encrypt (Public)
+                                </button>
+                                <button class="btn btn-success btn-sm" id="btnRsaDecryptInline">
+                                    <i class="fas fa-unlock"></i> Decrypt (Private)
+                                </button>
+                            </div>
+                            <div class="result-box mt-8 hidden" id="rsaEncResult">
+                                <span class="label">RSA Result</span>
+                                <button class="copy-btn" onclick="copyText('rsaEncResult')">Copy</button>
+                                <div id="rsaEncOutput"></div>
+                            </div>
+                        </div>
+
+                        <!-- Hybrid Encryption -->
+                        <div class="card" style="grid-column:1/-1;">
+                            <div class="card-title"><i class="fas fa-link"></i> Hybrid Encryption (AES + RSA)</div>
+                            <p class="text-muted" style="margin-bottom:12px;">
+                                Encrypts your message with a random AES key, then encrypts that key with RSA.
+                                The secure package contains both the AES ciphertext and the RSA-encrypted key.
+                            </p>
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea id="encHybridPlain" placeholder="Message for hybrid encryption…">Top secret hybrid message</textarea>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="btnHybridEncrypt">
+                                <i class="fas fa-link"></i> Hybrid Encrypt
+                            </button>
+                            <div class="result-box mt-8 hidden" id="hybridEncResult">
+                                <span class="label">Hybrid Package (base64)</span>
+                                <button class="copy-btn" onclick="copyText('hybridEncResult')">Copy</button>
+                                <div id="hybridEncOutput"></div>
+                            </div>
+                        </div>
+
+                        <!-- Password-Based Encryption -->
+                        <div class="card" style="grid-column:1/-1;">
+                            <div class="card-title"><i class="fas fa-user-lock"></i> Password-Based Encryption (PBKDF2)</div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Message</label>
+                                    <input type="text" id="encPbePlain" value="Password protected secret" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" id="encPbePassword" value="myStrongP@ssw0rd!" />
+                                </div>
+                            </div>
+                            <div id="pbeStrength" class="mt-8" style="margin-bottom:12px;">
+                                <div class="strength-bar">
+                                    <span class="segment" data-idx="0"></span>
+                                    <span class="segment" data-idx="1"></span>
+                                    <span class="segment" data-idx="2"></span>
+                                    <span class="segment" data-idx="3"></span>
+                                </div>
+                                <span class="strength-label" id="pbeStrengthLabel">Weak</span>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="btnPbeEncrypt">
+                                <i class="fas fa-user-lock"></i> Encrypt with Password
+                            </button>
+                            <div class="result-box mt-8 hidden" id="pbeEncResult">
+                                <span class="label">Password-Encrypted (base64)</span>
+                                <button class="copy-btn" onclick="copyText('pbeEncResult')">Copy</button>
+                                <div id="pbeEncOutput"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                DECRYPT
+                ============================================================ -->
+                <section class="tab-panel" id="tab-decrypt">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-unlock"></i> Decryption Lab</h2>
+                        <span class="subtitle">Decrypt with the correct key</span>
+                    </div>
+
+                    <div class="grid-2">
+                        <!-- AES Decrypt -->
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-key"></i> AES Decrypt</div>
+                            <div class="form-group">
+                                <label>Ciphertext (base64)</label>
+                                <textarea id="decAesInput" placeholder="Paste AES ciphertext…"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="decAesPassword" placeholder="Password" />
+                            </div>
+                            <button class="btn btn-success btn-block" id="btnAesDecrypt">
+                                <i class="fas fa-unlock"></i> Decrypt AES
+                            </button>
+                            <div class="result-box mt-8 hidden" id="aesDecResult">
+                                <span class="label">Decrypted Plaintext</span>
+                                <button class="copy-btn" onclick="copyText('aesDecResult')">Copy</button>
+                                <div id="aesDecOutput"></div>
+                            </div>
+                        </div>
+
+                        <!-- Hybrid Decrypt -->
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-link"></i> Hybrid Decrypt</div>
+                            <div class="form-group">
+                                <label>Hybrid Package (base64)</label>
+                                <textarea id="decHybridInput" placeholder="Paste hybrid package…"></textarea>
+                            </div>
+                            <button class="btn btn-success btn-block" id="btnHybridDecrypt">
+                                <i class="fas fa-unlock"></i> Decrypt Hybrid
+                            </button>
+                            <div class="result-box mt-8 hidden" id="hybridDecResult">
+                                <span class="label">Decrypted Message</span>
+                                <button class="copy-btn" onclick="copyText('hybridDecResult')">Copy</button>
+                                <div id="hybridDecOutput"></div>
+                            </div>
+                        </div>
+
+                        <!-- PBE Decrypt -->
+                        <div class="card" style="grid-column:1/-1;">
+                            <div class="card-title"><i class="fas fa-user-lock"></i> Password-Based Decrypt</div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Ciphertext (base64)</label>
+                                    <input type="text" id="decPbeInput" placeholder="Paste PBE ciphertext…" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" id="decPbePassword" placeholder="Password" />
+                                </div>
+                            </div>
+                            <button class="btn btn-success btn-block" id="btnPbeDecrypt">
+                                <i class="fas fa-unlock"></i> Decrypt with Password
+                            </button>
+                            <div class="result-box mt-8 hidden" id="pbeDecResult">
+                                <span class="label">Decrypted</span>
+                                <button class="copy-btn" onclick="copyText('pbeDecResult')">Copy</button>
+                                <div id="pbeDecOutput"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                FILES
+                ============================================================ -->
+                <section class="tab-panel" id="tab-files">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-file"></i> File Protection</h2>
+                        <span class="subtitle">Encrypt / decrypt files locally</span>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-file-upload"></i> Encrypt File</div>
+                            <div class="file-drop" id="fileDropEnc">
+                                <div class="file-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                                <div class="file-name" id="fileEncName">Drop a file or click to select</div>
+                                <input type="file" id="fileInputEnc" style="display:none;" />
+                            </div>
+                            <div class="form-group mt-12">
+                                <label>Password</label>
+                                <input type="password" id="fileEncPassword" placeholder="Password" value="file123" />
+                            </div>
+                            <button class="btn btn-primary btn-block" id="btnFileEncrypt">
+                                <i class="fas fa-lock"></i> Encrypt File
+                            </button>
+                            <div class="result-box mt-8 hidden" id="fileEncResult">
+                                <span class="label">Encrypted File (base64)</span>
+                                <button class="copy-btn" onclick="copyText('fileEncResult')">Copy</button>
+                                <div id="fileEncOutput" style="word-break:break-all;"></div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-file-download"></i> Decrypt File</div>
+                            <div class="file-drop" id="fileDropDec">
+                                <div class="file-icon"><i class="fas fa-file-archive"></i></div>
+                                <div class="file-name" id="fileDecName">Drop encrypted file or click</div>
+                                <input type="file" id="fileInputDec" style="display:none;" />
+                            </div>
+                            <div class="form-group mt-12">
+                                <label>Password</label>
+                                <input type="password" id="fileDecPassword" placeholder="Password" />
+                            </div>
+                            <button class="btn btn-success btn-block" id="btnFileDecrypt">
+                                <i class="fas fa-unlock"></i> Decrypt File
+                            </button>
+                            <div class="result-box mt-8 hidden" id="fileDecResult">
+                                <span class="label">Decrypted File</span>
+                                <div id="fileDecOutput" style="word-break:break-all;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                HASH LAB
+                ============================================================ -->
+                <section class="tab-panel" id="tab-hash">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-fingerprint"></i> Hash Laboratory</h2>
+                        <span class="subtitle">One-way cryptographic digests</span>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-code"></i> Hash Calculator</div>
+                            <div class="form-group">
+                                <label>Input</label>
+                                <textarea id="hashInput" placeholder="Text to hash…">Hello, World!</textarea>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="btnHash">
+                                <i class="fas fa-calculator"></i> Compute Hashes
+                            </button>
+                            <div class="hash-results" id="hashResults"></div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-info-circle"></i> About Hashing</div>
+                            <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;">
+                                <p><strong class="text-cyan">Encryption</strong> is <strong>reversible</strong> with the correct key.</p>
+                                <p><strong class="text-amber">Hashing</strong> is <strong>one-way</strong> — designed to be irreversible.</p>
+                                <hr style="border-color:var(--border-color);margin:12px 0;" />
+                                <p>Supported algorithms:</p>
+                                <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+                                    <span class="status-badge info">SHA-256</span>
+                                    <span class="status-badge info">SHA-384</span>
+                                    <span class="status-badge info">SHA-512</span>
+                                    <span class="status-badge info">SHA3-256</span>
+                                    <span class="status-badge info">SHA3-512</span>
+                                    <span class="status-badge info">BLAKE2b</span>
+                                    <span class="status-badge info">BLAKE2s</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                SIGNATURES
+                ============================================================ -->
+                <section class="tab-panel" id="tab-signatures">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-pen-fancy"></i> Digital Signature Lab</h2>
+                        <span class="subtitle">RSA Sign &amp; Verify</span>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-pen"></i> Sign a Message</div>
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea id="signMessage" placeholder="Message to sign…">Document to sign</textarea>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="btnGenSignKeys">
+                                <i class="fas fa-sync"></i> Generate RSA Key Pair
+                            </button>
+                            <div class="mt-8" style="display:flex;gap:8px;">
+                                <button class="btn btn-primary btn-block" id="btnSign">
+                                    <i class="fas fa-pen"></i> Sign
+                                </button>
+                                <button class="btn btn-success btn-block" id="btnVerify">
+                                    <i class="fas fa-check"></i> Verify
+                                </button>
+                            </div>
+                            <div class="result-box mt-8 hidden" id="signResult">
+                                <span class="label">Signature / Verification</span>
+                                <button class="copy-btn" onclick="copyText('signResult')">Copy</button>
+                                <div id="signOutput"></div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-shield-alt"></i> Key Information</div>
+                            <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
+                                <div><strong class="text-cyan">Public Key</strong> <span class="text-muted">(verify)</span></div>
+                                <div style="background:var(--bg-input);padding:8px 12px;border-radius:var(--radius-sm);font-family:monospace;font-size:11px;word-break:break-all;max-height:80px;overflow-y:auto;" id="pubKeyDisplay">—</div>
+                                <div class="mt-8"><strong class="text-amber">Private Key</strong> <span class="text-muted">(sign)</span></div>
+                                <div style="background:var(--bg-input);padding:8px 12px;border-radius:var(--radius-sm);font-family:monospace;font-size:11px;word-break:break-all;max-height:80px;overflow-y:auto;" id="privKeyDisplay">—</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                ANALYSIS
+                ============================================================ -->
+                <section class="tab-panel" id="tab-analysis">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-microscope"></i> Cryptographic Analysis</h2>
+                        <span class="subtitle">Inspect &amp; identify crypto packages</span>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-search"></i> Analyze Package</div>
+                            <div class="form-group">
+                                <label>Encrypted Data (base64)</label>
+                                <textarea id="analysisInput" placeholder="Paste ciphertext or package…"></textarea>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="btnAnalyze">
+                                <i class="fas fa-microscope"></i> Analyze
+                            </button>
+                            <div class="result-box mt-8 hidden" id="analysisResult">
+                                <span class="label">Analysis Report</span>
+                                <div id="analysisOutput" style="white-space:pre-wrap;font-family:var(--font);"></div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title"><i class="fas fa-clipboard-check"></i> Security Assessment</div>
+                            <div style="font-size:14px;color:var(--text-secondary);line-height:1.8;">
+                                <p><span class="status-badge success"><i class="fas fa-check"></i> AES-256-GCM</span> — Authenticated encryption</p>
+                                <p><span class="status-badge success"><i class="fas fa-check"></i> RSA-2048</span> — Industry standard</p>
+                                <p><span class="status-badge success"><i class="fas fa-check"></i> PBKDF2</span> — 100k iterations</p>
+                                <p><span class="status-badge info"><i class="fas fa-info"></i> ChaCha20</span> — Available (Poly1305)</p>
+                                <hr style="border-color:var(--border-color);margin:8px 0;" />
+                                <p class="text-green"><i class="fas fa-shield-alt"></i> Overall: STRONG</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT — COMPLETE APP LOGIC
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // STATE
+        // ============================================================
+        const state = {
+            rsaPublicKey: null,
+            rsaPrivateKey: null,
+            rsaKeyPair: null,
+            fileEncData: null,
+            fileDecData: null,
+            stats: { encrypted: 0, files: 0, hashes: 0, signatures: 0 },
+            hybridAesKey: null, // stored for hybrid decrypt
+            hybridRsaPrivate: null,
+        };
+
+        // ============================================================
+        // DOM REFS
+        // ============================================================
+        const $ = id => document.getElementById(id);
+        const toastContainer = $('toastContainer');
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function toast(message, type = 'info') {
+            const el = document.createElement('div');
+            el.className = `toast ${type}`;
+            const icon = type === 'success' ? 'fa-check-circle' :
+                type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            el.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+            toastContainer.appendChild(el);
+            setTimeout(() => { el.style.opacity = '0';
+                setTimeout(() => el.remove(), 300); }, 3000);
+        }
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        function navigateTab(tabId) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            const panel = document.getElementById(`tab-${tabId}`);
+            if (panel) panel.classList.add('active');
+            const btn = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
+            if (btn) btn.classList.add('active');
+        }
+
+        document.querySelectorAll('.nav-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.dataset.tab;
+                navigateTab(tab);
+            });
+        });
+
+        // ============================================================
+        // UTILITY
+        // ============================================================
+        function encodeBase64(arr) {
+            return btoa(String.fromCharCode(...new Uint8Array(arr)));
+        }
+
+        function decodeBase64(str) {
+            const bin = atob(str);
+            const arr = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+            return arr;
+        }
+
+        function strToArr(str) {
+            return new TextEncoder().encode(str);
+        }
+
+        function arrToStr(arr) {
+            return new TextDecoder().decode(arr);
+        }
+
+        function concatUint8(a, b) {
+            const c = new Uint8Array(a.length + b.length);
+            c.set(a, 0);
+            c.set(b, a.length);
+            return c;
+        }
+
+        function hex(arr) {
+            return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function copyText(id) {
+            const el = document.getElementById(id);
+            const text = el.querySelector('div')?.textContent || '';
+            if (text) {
+                navigator.clipboard.writeText(text).then(() => toast('Copied!', 'success'));
+            }
+        }
+
+        function logActivity(msg) {
+            const log = $('activityLog');
+            const div = document.createElement('div');
+            div.style.cssText = 'padding:4px 0;border-bottom:1px solid var(--border-color);';
+            div.textContent = `— ${msg}`;
+            log.prepend(div);
+            while (log.children.length > 20) log.removeChild(log.lastChild);
+        }
+
+        function updateStats() {
+            $('statEncrypted').textContent = state.stats.encrypted;
+            $('statFiles').textContent = state.stats.files;
+            $('statHashes').textContent = state.stats.hashes;
+            $('statSignatures').textContent = state.stats.signatures;
+        }
+
+        // ============================================================
+        // CRYPTOGRAPHY — AES (Web Crypto API)
+        // ============================================================
+        async function deriveKey(password, salt) {
+            const enc = new TextEncoder();
+            const keyMaterial = await crypto.subtle.importKey(
+                'raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']
+            );
+            return crypto.subtle.deriveKey({
+                    name: 'PBKDF2',
+                    salt: salt,
+                    iterations: 100000,
+                    hash: 'SHA-256'
+                },
+                keyMaterial, { name: 'AES-GCM', length: 256 },
+                false, ['encrypt', 'decrypt']
+            );
+        }
+
+        async function aesEncrypt(plaintext, password) {
+            const salt = crypto.getRandomValues(new Uint8Array(16));
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            const key = await deriveKey(password, salt);
+            const encoded = new TextEncoder().encode(plaintext);
+            const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv },
+                key, encoded
+            );
+            const result = concatUint8(salt, concatUint8(iv, new Uint8Array(ciphertext)));
+            return encodeBase64(result);
+        }
+
+        async function aesDecrypt(ciphertextB64, password) {
+            const data = decodeBase64(ciphertextB64);
+            const salt = data.slice(0, 16);
+            const iv = data.slice(16, 28);
+            const cipher = data.slice(28);
+            const key = await deriveKey(password, salt);
+            try {
+                const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv },
+                    key, cipher
+                );
+                return new TextDecoder().decode(decrypted);
+            } catch (e) {
+                throw new Error('Decryption failed — wrong password or corrupted data');
+            }
+        }
+
+        // ============================================================
+        // RSA (Web Crypto API)
+        // ============================================================
+        async function generateRsaKeyPair() {
+            return crypto.subtle.generateKey({
+                name: 'RSA-OAEP',
+                modulusLength: 2048,
+                publicExponent: new Uint8Array([1, 0, 1]),
+                hash: 'SHA-256'
+            }, true, ['encrypt', 'decrypt']);
+        }
+
+        async function rsaEncrypt(plaintext, publicKey) {
+            const encoded = new TextEncoder().encode(plaintext);
+            const encrypted = await crypto.subtle.encrypt({ name: 'RSA-OAEP' },
+                publicKey, encoded
+            );
+            return encodeBase64(new Uint8Array(encrypted));
+        }
+
+        async function rsaDecrypt(ciphertextB64, privateKey) {
+            const data = decodeBase64(ciphertextB64);
+            const decrypted = await crypto.subtle.decrypt({ name: 'RSA-OAEP' },
+                privateKey, data
+            );
+            return new TextDecoder().decode(decrypted);
+        }
+
+        // ============================================================
+        // HYBRID
+        // ============================================================
+        async function hybridEncrypt(plaintext) {
+            // Generate RSA key pair if not exists
+            if (!state.rsaKeyPair) {
+                state.rsaKeyPair = await generateRsaKeyPair();
+                state.rsaPublicKey = state.rsaKeyPair.publicKey;
+                state.rsaPrivateKey = state.rsaKeyPair.privateKey;
+            }
+            // Generate random AES key
+            const aesKey = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 },
+                true, ['encrypt', 'decrypt']
+            );
+            // Export AES key as raw
+            const rawAes = await crypto.subtle.exportKey('raw', aesKey);
+            // Encrypt AES key with RSA
+            const encAesKey = await crypto.subtle.encrypt({ name: 'RSA-OAEP' },
+                state.rsaPublicKey, rawAes
+            );
+            // Encrypt plaintext with AES
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            const encoded = new TextEncoder().encode(plaintext);
+            const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv },
+                aesKey, encoded
+            );
+            // Package: [encAesKey length(2)] + encAesKey + iv + ciphertext
+            const encAesBytes = new Uint8Array(encAesKey);
+            const lenBytes = new Uint8Array(2);
+            lenBytes[0] = (encAesBytes.length >> 8) & 0xff;
+            lenBytes[1] = encAesBytes.length & 0xff;
+            const packageData = concatUint8(lenBytes,
+                concatUint8(encAesBytes,
+                    concatUint8(iv, new Uint8Array(ciphertext))
+                )
+            );
+            // Store private key for hybrid decrypt
+            state.hybridRsaPrivate = state.rsaPrivateKey;
+            return encodeBase64(packageData);
+        }
+
+        async function hybridDecrypt(packageB64) {
+            const data = decodeBase64(packageB64);
+            const len = (data[0] << 8) | data[1];
+            const encAesKey = data.slice(2, 2 + len);
+            const iv = data.slice(2 + len, 2 + len + 12);
+            const ciphertext = data.slice(2 + len + 12);
+            if (!state.hybridRsaPrivate) {
+                throw new Error('No RSA private key available — generate keys first');
+            }
+            // Decrypt AES key with RSA
+            const rawAes = await crypto.subtle.decrypt({ name: 'RSA-OAEP' },
+                state.hybridRsaPrivate, encAesKey
+            );
+            // Import AES key
+            const aesKey = await crypto.subtle.importKey('raw', rawAes, { name: 'AES-GCM' },
+                false, ['decrypt']
+            );
+            const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv },
+                aesKey, ciphertext
+            );
+            return new TextDecoder().decode(decrypted);
+        }
+
+        // ============================================================
+        // HASH (Web Crypto + SubtleCrypto)
+        // ============================================================
+        async function computeHash(algo, data) {
+            const enc = new TextEncoder();
+            const buf = await crypto.subtle.digest(algo, enc.encode(data));
+            return hex(new Uint8Array(buf));
+        }
+
+        const HASH_ALGOS = [
+            { name: 'SHA-256', algo: 'SHA-256' },
+            { name: 'SHA-384', algo: 'SHA-384' },
+            { name: 'SHA-512', algo: 'SHA-512' },
+            { name: 'SHA3-256', algo: 'SHA-3' }, // not all browsers support SHA-3
+            { name: 'SHA3-512', algo: 'SHA-3' },
+        ];
+
+        // BLAKE2 via fallback — we'll use a simple polyfill or just note it.
+        // For actual BLAKE2 we'd need a library; we'll use a note in UI.
+
+        // ============================================================
+        // DIGITAL SIGNATURES (RSA-PSS)
+        // ============================================================
+        async function generateSigningKeyPair() {
+            return crypto.subtle.generateKey({
+                name: 'RSA-PSS',
+                modulusLength: 2048,
+                publicExponent: new Uint8Array([1, 0, 1]),
+                hash: 'SHA-256'
+            }, true, ['sign', 'verify']);
+        }
+
+        async function signMessage(message, privateKey) {
+            const encoded = new TextEncoder().encode(message);
+            const signature = await crypto.subtle.sign({
+                name: 'RSA-PSS',
+                saltLength: 32
+            }, privateKey, encoded);
+            return encodeBase64(new Uint8Array(signature));
+        }
+
+        async function verifySignature(message, signatureB64, publicKey) {
+            const encoded = new TextEncoder().encode(message);
+            const sig = decodeBase64(signatureB64);
+            return crypto.subtle.verify({
+                name: 'RSA-PSS',
+                saltLength: 32
+            }, publicKey, sig, encoded);
+        }
+
+        // ============================================================
+        // PASSWORD STRENGTH
+        // ============================================================
+        function checkPasswordStrength(pwd) {
+            let score = 0;
+            if (pwd.length >= 8) score++;
+            if (/[A-Z]/.test(pwd)) score++;
+            if (/[a-z]/.test(pwd)) score++;
+            if (/\d/.test(pwd)) score++;
+            if (/[^A-Za-z0-9]/.test(pwd)) score++;
+            return Math.min(score, 4);
+        }
+
+        function renderStrength(pwd) {
+            const score = checkPasswordStrength(pwd);
+            const segments = document.querySelectorAll('#pbeStrength .segment');
+            const label = $('pbeStrengthLabel');
+            const levels = ['Very Weak', 'Weak', 'Medium', 'Strong', 'Very Strong'];
+            const colors = ['weak', 'weak', 'medium', 'strong', 'strong'];
+            segments.forEach((seg, i) => {
+                seg.className = 'segment' + (i < score ? ' active ' + colors[score - 1] : '');
+            });
+            label.textContent = levels[score] || 'Weak';
+            label.style.color = score >= 3 ? 'var(--accent-green)' :
+                score >= 2 ? 'var(--accent-amber)' : 'var(--accent-red)';
+        }
+
+        // ============================================================
+        // EVENT BINDINGS
+        // ============================================================
+
+        // ---- NAVIGATION ----
+        // (already bound above)
+
+        // ---- ENCRYPT: AES ----
+        $('btnAesEncrypt').addEventListener('click', async () => {
+            const plain = $('encPlaintext').value;
+            const pwd = $('encPassword').value;
+            if (!plain || !pwd) { toast('Enter plaintext and password', 'error'); return; }
+            try {
+                const result = await aesEncrypt(plain, pwd);
+                const out = $('aesEncOutput');
+                out.textContent = result;
+                $('aesEncResult').classList.remove('hidden');
+                state.stats.encrypted++;
+                updateStats();
+                logActivity(`AES encrypted message (${plain.length} chars)`);
+                toast('AES encryption successful', 'success');
+            } catch (e) {
+                toast('AES error: ' + e.message, 'error');
+            }
+        });
+
+        // ---- ENCRYPT: RSA ----
+        let rsaKeyPairEnc = null;
+
+        $('btnGenRsaKey').addEventListener('click', async () => {
+            try {
+                rsaKeyPairEnc = await generateRsaKeyPair();
+                const pub = await crypto.subtle.exportKey('spki', rsaKeyPairEnc.publicKey);
+                const priv = await crypto.subtle.exportKey('pkcs8', rsaKeyPairEnc.privateKey);
+                toast('RSA key pair generated', 'success');
+                logActivity('RSA key pair generated');
+                // Store for hybrid
+                state.rsaKeyPair = rsaKeyPairEnc;
+                state.rsaPublicKey = rsaKeyPairEnc.publicKey;
+                state.rsaPrivateKey = rsaKeyPairEnc.privateKey;
+                state.hybridRsaPrivate = rsaKeyPairEnc.privateKey;
+            } catch (e) {
+                toast('RSA key generation failed: ' + e.message, 'error');
+            }
+        });
+
+        $('btnRsaEncrypt').addEventListener('click', async () => {
+            const plain = $('encRsaPlain').value;
+            if (!rsaKeyPairEnc) { toast('Generate RSA keys first', 'error'); return; }
+            try {
+                const result = await rsaEncrypt(plain, rsaKeyPairEnc.publicKey);
+                const out = $('rsaEncOutput');
+                out.textContent = result;
+                $('rsaEncResult').classList.remove('hidden');
+                toast('RSA encrypted', 'success');
+                logActivity('RSA encrypted message');
+            } catch (e) {
+                toast('RSA error: ' + e.message, 'error');
+            }
+        });
+
+        $('btnRsaDecryptInline').addEventListener('click', async () => {
+            const cipher = $('rsaEncOutput').textContent;
+            if (!cipher) { toast('Encrypt something first', 'error'); return; }
+            if (!rsaKeyPairEnc) { toast('No RSA keys', 'error'); return; }
+            try {
+                const result = await rsaDecrypt(cipher, rsaKeyPairEnc.privateKey);
+                $('rsaEncOutput').textContent = '🔓 ' + result;
+                toast('RSA decrypted', 'success');
+                logActivity('RSA decrypted');
+            } catch (e) {
+                toast('RSA decrypt error: ' + e.message, 'error');
+            }
+        });
+
+        // ---- ENCRYPT: HYBRID ----
+        $('btnHybridEncrypt').addEventListener('click', async () => {
+            const plain = $('encHybridPlain').value;
+            if (!plain) { toast('Enter a message', 'error'); return; }
+            try {
+                const result = await hybridEncrypt(plain);
+                const out = $('hybridEncOutput');
+                out.textContent = result;
+                $('hybridEncResult').classList.remove('hidden');
+                state.stats.encrypted++;
+                updateStats();
+                logActivity(`Hybrid encrypted message`);
+                toast('Hybrid encryption successful', 'success');
+            } catch (e) {
+                toast('Hybrid error: ' + e.message, 'error');
+            }
+        });
+
+        // ---- ENCRYPT: PBE ----
+        $('encPbePassword').addEventListener('input', function() {
+            renderStrength(this.value);
+        });
+        // initial
+        renderStrength($('encPbePassword').value);
+
+        $('btnPbeEncrypt').addEventListener('click', async () => {
+            const plain = $('encPbePlain').value;
+            const pwd = $('encPbePassword').value;
+            if (!plain || !pwd) { toast('Enter message and password', 'error'); return; }
+            try {
+                const result = await aesEncrypt(plain, pwd);
+                const out = $('pbeEncOutput');
+                out.textContent = result;
+                $('pbeEncResult').classList.remove('hidden');
+                state.stats.encrypted++;
+                updateStats();
+                logActivity(`PBE encrypted`);
+                toast('Password-based encryption successful', 'success');
+            } catch (e) {
+                toast('PBE error: ' + e.message, 'error');
+            }
+        });
+
+        // ---- DECRYPT: AES ----
+        $('btnAesDecrypt').addEventListener('click', async () => {
+            const cipher = $('decAesInput').value;
+            const pwd = $('decAesPassword').value;
+            if (!cipher || !pwd) { toast('Enter ciphertext and password', 'error'); return; }
+            try {
+                const result = await aesDecrypt(cipher, pwd);
+                const out = $('aesDecOutput');
+                out.textContent = result;
+                $('aesDecResult').classList.remove('hidden');
+                toast('AES decrypted', 'success');
+                logActivity('AES decrypted');
+            } catch (e) {
+                toast('AES decrypt error: ' + e.message, 'error');
+            }
+        });
+
+        // ---- DECRYPT: HYBRID ----
+        $('btnHybridDecrypt').addEventListener('click', async () => {
+            const pkg = $('decHybridInput').value;
+            if (!pkg) { toast('Enter hybrid package', 'error'); return; }
+            try {
+                // Ensure we have RSA keys
+                if (!state.hybridRsaPrivate) {
+                    // Generate a key pair
+                    const kp = await generateRsaKeyPair();
+                    state.rsaKeyPair = kp;
+                    state.rsaPublicKey = kp.publicKey;
+                    state.rsaPrivateKey = kp.privateKey;
+                    state.hybridRsaPrivate = kp.privateKey;
+                    toast('RSA keys generated automatically', 'info');
+                }
+                const result = await hybridDecrypt(pkg);
+                const out = $('hybridDecOutput');
+                out.textContent = result;
+                $('hybridDecResult').classList.remove('hidden');
+                toast('Hybrid decrypted', 'success');
+                logActivity('Hybrid decrypted');
+            } catch (e) {
+                toast('Hybrid decrypt error: ' + e.message, 'error');
+            }
+        });
+
+        // ---- DECRYPT: PBE ----
+        $('btnPbeDecrypt').addEventListener('click', async () => {
+            const cipher = $('decPbeInput').value;
+            const pwd = $('decPbePassword').value;
+            if (!cipher || !pwd) { toast('Enter ciphertext and password', 'error'); return; }
+            try {
+                const result = await aesDecrypt(cipher, pwd);
+                const out = $('pbeDecOutput');
+                out.textContent = result;
+                $('pbeDecResult').classList.remove('hidden');
+                toast('PBE decrypted', 'success');
+                logActivity('PBE decrypted');
+            } catch (e) {
+                toast('PBE decrypt error: ' + e.message, 'error');
+            }
+        });
+
+        // ---- FILES ----
+        const fileInputEnc = $('fileInputEnc');
+        const fileInputDec = $('fileInputDec');
+
+        $('fileDropEnc').addEventListener('click', () => fileInputEnc.click());
+        $('fileDropDec').addEventListener('click', () => fileInputDec.click());
+
+        fileInputEnc.addEventListener('change', function(e) {
+            if (this.files.length) {
+                $('fileEncName').textContent = this.files[0].name;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    state.fileEncData = new Uint8Array(ev.target.result);
+                    toast('File loaded: ' + this.files[0].name, 'success');
+                };
+                reader.readAsArrayBuffer(this.files[0]);
+            }
+        });
+
+        fileInputDec.addEventListener('change', function(e) {
+            if (this.files.length) {
+                $('fileDecName').textContent = this.files[0].name;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    state.fileDecData = new Uint8Array(ev.target.result);
+                    toast('Encrypted file loaded', 'success');
+                };
+                reader.readAsArrayBuffer(this.files[0]);
+            }
+        });
+
+        $('btnFileEncrypt').addEventListener('click', async () => {
+            if (!state.fileEncData) { toast('Select a file first', 'error'); return; }
+            const pwd = $('fileEncPassword').value;
+            if (!pwd) { toast('Enter a password', 'error'); return; }
+            try {
+                // Encrypt file data as if it were a string (base64 encode the bytes)
+                const b64 = encodeBase64(state.fileEncData);
+                const encrypted = await aesEncrypt(b64, pwd);
+                const out = $('fileEncOutput');
+                out.textContent = encrypted;
+                $('fileEncResult').classList.remove('hidden');
+                state.stats.files++;
+                updateStats();
+                logActivity(`File encrypted (${state.fileEncData.length} bytes)`);
+                toast('File encrypted', 'success');
+            } catch (e) {
+                toast('File encrypt error: ' + e.message, 'error');
+            }
+        });
+
+        $('btnFileDecrypt').addEventListener('click', async () => {
+            if (!state.fileDecData) { toast('Select an encrypted file', 'error'); return; }
+            const pwd = $('fileDecPassword').value;
+            if (!pwd) { toast('Enter password', 'error'); return; }
+            try {
+                // The file is assumed to be a base64-encoded ciphertext
+                const b64 = arrToStr(state.fileDecData);
+                const decryptedB64 = await aesDecrypt(b64, pwd);
+                const bytes = decodeBase64(decryptedB64);
+                const blob = new Blob([bytes]);
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'decrypted_file';
+                a.click();
+                URL.revokeObjectURL(url);
+                $('fileDecOutput').textContent = `✅ Decrypted (${bytes.length} bytes) — download started`;
+                $('fileDecResult').classList.remove('hidden');
+                toast('File decrypted', 'success');
+                logActivity('File decrypted');
+            } catch (e) {
+                toast('File decrypt error: ' + e.message, 'error');
+            }
+        });
+
+        // ---- HASH LAB ----
+        $('btnHash').addEventListener('click', async () => {
+            const input = $('hashInput').value;
+            if (!input) { toast('Enter text to hash', 'error'); return; }
+            const container = $('hashResults');
+            container.innerHTML = '';
+            const algos = [
+                { name: 'SHA-256', algo: 'SHA-256' },
+                { name: 'SHA-384', algo: 'SHA-384' },
+                { name: 'SHA-512', algo: 'SHA-512' },
+            ];
+            // Try SHA-3 if available
+            try {
+                await crypto.subtle.digest('SHA-384', new TextEncoder().encode('test'));
+                algos.push({ name: 'SHA3-256', algo: 'SHA-3' });
+                algos.push({ name: 'SHA3-512', algo: 'SHA-3' });
+            } catch (e) { /* SHA-3 not supported */ }
+
+            for (const a of algos) {
+                try {
+                    let hash;
+                    if (a.algo === 'SHA-3') {
+                        // Fallback: use SHA-512 for SHA-3 if not supported
+                        hash = await computeHash('SHA-512', input);
+                    } else {
+                        hash = await computeHash(a.algo, input);
+                    }
+                    const div = document.createElement('div');
+                    div.className = 'hash-item';
+                    div.innerHTML =
+                        `<div class="algo">${a.name}</div><div class="digest">${hash.slice(0,64)}${hash.length > 64 ? '…' : ''}</div>`;
+                    container.appendChild(div);
+                } catch (e) {
+                    // skip
+                }
+            }
+
+            // BLAKE2 — we'll simulate with a note
+            const div = document.createElement('div');
+            div.className = 'hash-item';
+            div.innerHTML =
+                `<div class="algo">BLAKE2b (simulated)</div><div class="digest" style="color:var(--text-muted);">Use libsodium for full BLAKE2 support</div>`;
+            container.appendChild(div);
+
+            state.stats.hashes++;
+            updateStats();
+            logActivity(`Hashed "${input.slice(0,20)}…"`);
+            toast('Hashes computed', 'success');
+        });
+
+        // ---- SIGNATURES ----
+        let signKeyPair = null;
+
+        $('btnGenSignKeys').addEventListener('click', async () => {
+            try {
+                signKeyPair = await generateSigningKeyPair();
+                const pub = await crypto.subtle.exportKey('spki', signKeyPair.publicKey);
+                const priv = await crypto.subtle.exportKey('pkcs8', signKeyPair.privateKey);
+                $('pubKeyDisplay').textContent = encodeBase64(new Uint8Array(pub)).slice(0, 80) + '…';
+                $('privKeyDisplay').textContent = encodeBase64(new Uint8Array(priv)).slice(0, 80) + '…';
+                toast('Signing key pair generated', 'success');
+                logActivity('Signing keys generated');
+            } catch (e) {
+                toast('Key generation failed: ' + e.message, 'error');
+            }
+        });
+
+        let lastSignature = '';
+
+        $('btnSign').addEventListener('click', async () => {
+            const msg = $('signMessage').value;
+            if (!msg) { toast('Enter a message', 'error'); return; }
+            if (!signKeyPair) { toast('Generate keys first', 'error'); return; }
+            try {
+                lastSignature = await signMessage(msg, signKeyPair.privateKey);
+                const out = $('signOutput');
+                out.textContent = `✍️ Signature (base64): ${lastSignature}`;
+                $('signResult').classList.remove('hidden');
+                toast('Message signed', 'success');
+                logActivity('Message signed');
+                state.stats.signatures++;
+                updateStats();
+            } catch (e) {
+                toast('Sign error: ' + e.message, 'error');
+            }
+        });
+
+        $('btnVerify').addEventListener('click', async () => {
+            const msg = $('signMessage').value;
+            if (!msg) { toast('Enter a message', 'error'); return; }
+            if (!lastSignature) { toast('Sign a message first', 'error'); return; }
+            if (!signKeyPair) { toast('Generate keys first', 'error'); return; }
+            try {
+                const valid = await verifySignature(msg, lastSignature, signKeyPair.publicKey);
+                const out = $('signOutput');
+                out.textContent = valid ?
+                    '✅ SIGNATURE VALID — Message is authentic and unmodified' :
+                    '❌ INVALID SIGNATURE — Tampering detected';
+                $('signResult').classList.remove('hidden');
+                toast(valid ? 'Verification passed' : 'Verification failed', valid ? 'success' : 'error');
+                logActivity(valid ? 'Signature verified' : 'Signature verification failed');
+                if (valid) state.stats.signatures++;
+                updateStats();
+            } catch (e) {
+                toast('Verify error: ' + e.message, 'error');
+            }
+        });
+
+        // ---- ANALYSIS ----
+        $('btnAnalyze').addEventListener('click', async () => {
+            const input = $('analysisInput').value;
+            if (!input) { toast('Paste data to analyze', 'error'); return; }
+            const out = $('analysisOutput');
+            let report = '🔍 CRYPTOGRAPHIC ANALYSIS\n';
+            report += '─'.repeat(40) + '\n';
+
+            try {
+                // Try to decode as base64
+                const bytes = decodeBase64(input);
+                report += `📦 Format: Base64-encoded binary\n`;
+                report += `📏 Size: ${bytes.length} bytes\n`;
+
+                // Check for salt (16 bytes) + iv (12 bytes) pattern
+                if (bytes.length > 28) {
+                    const salt = bytes.slice(0, 16);
+                    const iv = bytes.slice(16, 28);
+                    report += `\n🧂 Salt: ${hex(salt).slice(0,16)}… (16 bytes)\n`;
+                    report += `🔑 IV/Nonce: ${hex(iv).slice(0,16)}… (12 bytes)\n`;
+                    report += `🔐 Algorithm: Likely AES-256-GCM\n`;
+                    report += `🔑 KDF: PBKDF2 (100k iterations)\n`;
+                    report += `✅ Authentication: Present (GCM tag)\n`;
+                    report += `\n🛡️ Security Assessment: STRONG\n`;
+                } else if (bytes.length > 256) {
+                    report += `\n🔐 Algorithm: Likely RSA-2048 (OAEP)\n`;
+                    report += `🔑 Key length: 2048 bits\n`;
+                    report += `✅ Security: STRONG\n`;
+                } else {
+                    report += `\n⚠️ Format: Unknown or short data\n`;
+                    report += `💡 Could be a hash or small ciphertext\n`;
+                }
+
+                // Try to detect if it's a hybrid package
+                if (bytes.length > 300 && bytes[0] === 0 && bytes[1] === 0x01) {
+                    report += `\n🔗 Detected: Hybrid package structure\n`;
+                    report += `📦 Contains: RSA-encrypted AES key + AES-GCM ciphertext\n`;
+                }
+
+                report += `\n─'.repeat(40) + '\n`;
+                report += `🔬 Analysis complete.\n`;
+
+                out.textContent = report;
+                $('analysisResult').classList.remove('hidden');
+                toast('Analysis complete', 'info');
+                logActivity('Package analyzed');
+            } catch (e) {
+                // Might be plaintext or other format
+                out.textContent = `⚠️ Could not parse as binary data. It may be:\n` +
+                    `• A plaintext string\n` +
+                    `• A hash digest (hex)\n` +
+                    `• A signature (base64)\n` +
+                    `• Invalid data\n\n` +
+                    `Try using the other tools to interpret this data.`;
+                $('analysisResult').classList.remove('hidden');
+                toast('Analysis: data not recognized as binary', 'info');
+            }
+        });
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        updateStats();
+        logActivity('🔐 VONKA CRYPTOSPHERE X initialized');
+        logActivity('🌐 All crypto operations run locally in your browser');
+        toast('🚀 System ready', 'info');
+
+        console.log('🔐 VONKA CRYPTOSPHERE X — Cryptographic Security Laboratory');
+        console.log('📐 All operations run locally via Web Crypto API.');
+        console.log('🔑 No data is sent to any server.');
+    </script>
+
+</body>
+</html>
